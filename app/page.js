@@ -36,7 +36,7 @@ export default function Home() {
 
       {/* Online leave form system */}
       <div>
-        {/* <OnlineLeaveForm /> */}
+        <OnlineLeaveForm />
 
         <div className="mt-6">
           <h2 className="text-2xl font-bold mb-2">Important Notices</h2>
