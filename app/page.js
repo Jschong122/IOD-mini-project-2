@@ -1,29 +1,42 @@
+"use client";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
-import { ExternalLink } from "react-external-link";
 import OnlineLeaveForm from "./_components/OnlineLeaveForm";
-import { Button } from "@/components/ui/Button";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <p className="flex text-center text-3xl"> Loading...</p>;
+  }
+
   return (
     <div>
-      <div></div>
-
       <div>
         <Alert>
           <Terminal className="h-4 w-4" />
-          <AlertTitle>Heads up!</AlertTitle>
+          <AlertTitle>
+            {session ? (
+              <p className=" text-blue-800">
+                Welcome, {session.user.username} , your ID is {session.user.id}{" "}
+                !
+              </p>
+            ) : (
+              "Please log in"
+            )}
+          </AlertTitle>
           <AlertDescription>
             <div>
               Welcome to my mini-project 2. <br />
-              In this project , This project is used shadcn UI , Strapi as third
-              party CMS to manage content.
+              In this project , This project is used shadcn UI and NextAuth.
+              <br />
             </div>
           </AlertDescription>
         </Alert>
       </div>
 
-      <div className="p-6 bg-white rounded-lg">
+      <div className="px-5 ">
         <h1 className="text-4xl font-bold mb-4">
           Welcome to the Smart Form System
         </h1>
@@ -38,7 +51,7 @@ export default function Home() {
       <div>
         <OnlineLeaveForm />
 
-        <div className="mt-6">
+        <div className=" mx-5">
           <h2 className="text-2xl font-bold mb-2">Important Notices</h2>
           <ul className="list-disc list-inside text-lg">
             <li>

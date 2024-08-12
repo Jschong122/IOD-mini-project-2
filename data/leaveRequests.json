@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1723466520681,
+    "startDate": "2024-08-16",
+    "endDate": "2024-08-27",
+    "reason": "Holiday",
+    "userId": 2,
+    "submittedDate": "2024-08-12",
+    "status": "Pending"
+  },
+  {
+    "id": 1723466701927,
+    "startDate": "2024-07-05",
+    "endDate": "2024-07-10",
+    "reason": "sick leave",
+    "userId": 2,
+    "submittedDate": "2024-07-01",
+    "status": "Approved"
+  }
+]
