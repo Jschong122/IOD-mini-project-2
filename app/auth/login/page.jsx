@@ -66,7 +66,11 @@ function Login() {
                 required
               />
             </div>
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full "
+              disabled={!username || !password}
+            >
               Login
             </Button>
           </div>

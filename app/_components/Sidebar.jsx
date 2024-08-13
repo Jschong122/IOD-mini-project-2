@@ -10,7 +10,7 @@ function Sidebar() {
 
   return (
     <div className="  flex flex-col justify-center bg-slate-300 h-screen min-w-60  text-black">
-      <ul className="space-y-6 flex flex-col  text-center items-center content-center cursor-pointer">
+      <ul className=" space-y-6 flex flex-col  text-center items-center content-center cursor-pointer">
         <Link href="/">
           <li className=" flex hover:text-blue-900 ">
             <FolderDot className=" mx-2" /> Home

@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSession, status } from "next-auth/react";
+import LeaveRequestTable from "../_components/LeaveRequestTable";
 
 const dashboard = () => {
   const { data: session } = useSession();
@@ -70,11 +71,14 @@ const dashboard = () => {
 
       <div className=" m-5 mt-[100px]">
         <h1 className="text-2xl font-bold "> Leave History</h1>
-        <table className=" table-auto w-[700px] border-collapse border-2 border-slate-800 text-center ">
+        <table className=" table-auto w-[900px] border-collapse border-2 border-slate-800 text-center ">
           <thead>
             <tr className=" ">
               <th className="border border-slate-500  bg-cyan-950 text-white">
                 Submit Date
+              </th>
+              <th className="border border-slate-500  bg-cyan-950 text-white">
+                username
               </th>
               <th className="border border-slate-500 bg-cyan-950 text-white">
                 Reason for leaving
@@ -91,20 +95,36 @@ const dashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {leaveRequests.map((request) => (
-              <tr>
-                <td className="border border-slate-500">
-                  {request.submittedDate}
-                </td>
-                <td className="border border-slate-500">{request.reason}</td>
-                <td className="border border-slate-500">
-                  {request.startDate} to {request.endDate}
-                </td>
-                <td className="border border-slate-500">{request.status}</td>
-              </tr>
-            ))}
+            {leaveRequests.map(
+              (request) => (
+                console.log(request),
+                (
+                  <tr>
+                    <td className="border border-slate-500">
+                      {request.submittedDate}
+                    </td>
+                    <td className="border border-slate-500">
+                      {request.username}
+                    </td>
+                    <td className="border border-slate-500">
+                      {request.reason}
+                    </td>
+                    <td className="border border-slate-500 ">
+                      {request.startDate} - {request.endDate}
+                    </td>
+                    <td className="border border-slate-500 px-5">
+                      {request.status}
+                    </td>
+                  </tr>
+                )
+              )
+            )}
           </tbody>
         </table>
+      </div>
+
+      <div>
+        <LeaveRequestTable />
       </div>
     </div>
   );
