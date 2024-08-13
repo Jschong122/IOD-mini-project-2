@@ -12,7 +12,7 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className="h-full w-full">
       <div>
         <Alert>
           <Terminal className="h-4 w-4" />
@@ -28,15 +28,15 @@ export default function Home() {
           </AlertTitle>
           <AlertDescription>
             <div>
-              Welcome to my mini-project 2. <br />
-              In this project , This project is used shadcn UI and NextAuth.
+              Welcome to my IOD- mini-project 2. <br />
+              This project used shadcn UI library and NextAuth for
+              authentication
               <br />
             </div>
           </AlertDescription>
         </Alert>
       </div>
-
-      <div className="px-5 ">
+      <div className="p-5 ">
         <h1 className="text-4xl font-bold mb-4">
           Welcome to the Smart Form System
         </h1>
@@ -47,7 +47,6 @@ export default function Home() {
         </p>
       </div>
 
-      {/* Online leave form system */}
       <div>
         <OnlineLeaveForm />
 
@@ -55,8 +54,8 @@ export default function Home() {
           <h2 className="text-2xl font-bold mb-2">Important Notices</h2>
           <ul className="list-disc list-inside text-lg">
             <li>
-              Please ensure all fields are filled out correctly before
-              submitting your leave request.
+              Please ensure you have logged in and all fields are filled out
+              correctly before submitting your leave request.
             </li>
             <li>
               Leave requests should be submitted at least two weeks in advance.

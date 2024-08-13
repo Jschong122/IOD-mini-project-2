@@ -29,6 +29,7 @@ function OnlineLeaveForm() {
       endDate,
       reason,
       submittedDate: new Date().toISOString().split("T")[0],
+      username: session.user.username,
     };
 
     try {
@@ -73,14 +74,19 @@ function OnlineLeaveForm() {
             <Input type="date" onChange={(e) => setStartDate(e.target.value)} />
             <p> Date return </p>
             <Input type="date" onChange={(e) => setEndDate(e.target.value)} />
-
             <Button
               type="submit"
               className=" mt-3"
-              disabled={!reason || !startDate || !endDate}
+              disabled={!reason || !startDate || !endDate || !session}
             >
               Submit
             </Button>
+
+            {!session && (
+              <p className="text-red-600 text-lg mt-3 font-bold">
+                Please login to submit
+              </p>
+            )}
           </CardContent>
         </Card>
       </form>
