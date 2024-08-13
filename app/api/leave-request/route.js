@@ -36,11 +36,23 @@ export async function POST(request) {
   }
 }
 
-export async function GET() {
+export async function GET(request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const username = searchParams.get("username");
+    console.log("Requested username:", username);
+
     const filePath = path.join(process.cwd(), "data", "leaveRequests.json");
     const fileData = fs.readFileSync(filePath, "utf-8");
-    const leaveRequests = JSON.parse(fileData);
+    let leaveRequests = JSON.parse(fileData);
+
+    if (username) {
+      leaveRequests = leaveRequests.filter(
+        (request) => request.username === username
+      );
+      console.log("Filtered leave Requests", "name:", username, leaveRequests);
+    }
+
     return NextResponse.json(leaveRequests);
   } catch (error) {
     console.error("Error fetching leave requests:", error);

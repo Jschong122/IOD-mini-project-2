@@ -16,7 +16,7 @@ export const authOptions = {
             id: 1,
             username: "John",
             password: "123",
-            role: "manager",
+            role: "Manager",
           },
           {
             id: 2,
@@ -35,6 +35,10 @@ export const authOptions = {
             user.username === credentials.username &&
             user.password === credentials.password
         );
+
+        if (user.role === undefined) {
+          user.role = "user";
+        }
 
         if (user) {
           console.log(`User found: ${JSON.stringify(user)}`);
@@ -57,14 +61,14 @@ export const authOptions = {
       if (user) {
         token.id = user.id;
         token.username = user.username;
-        token.role = user.role;
+        token.role = user.role || "user";
       }
       return token;
     },
     async session({ session, token }) {
       session.user.id = token.id;
       session.user.username = token.username;
-      session.user.role = token.role;
+      session.user.role = token.role || "user";
 
       return session;
     },
