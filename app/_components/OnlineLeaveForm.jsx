@@ -57,15 +57,11 @@ function OnlineLeaveForm() {
   };
 
   return (
-    <div className="p-4 max-w-max ">
+    <div className=" md:flex p-3 m-8 justify-evenly rounded-xl border-none bg-gradient-to-r from-[#93b9e7] to-[#5284b3] ">
       <form onSubmit={handleSubmit}>
-        <Card>
+        <Card className="bg-inherit border-none w-[300px] ">
           <CardHeader>
             <CardTitle>Online Leave Form </CardTitle>
-            <CardDescription>
-              Please enter the reason of request leave. Destination of the
-              country and return date.
-            </CardDescription>
           </CardHeader>
           <CardContent>
             <p>Reason of request leave</p>
@@ -90,6 +86,21 @@ function OnlineLeaveForm() {
           </CardContent>
         </Card>
       </form>
+      <div className=" p-3 ">
+        <h2 className="text-xl font-bold mb-2">Important Notices</h2>
+        <ul className="list-disc list-inside text-lg">
+          <li>
+            Please ensure you have logged in and all fields are filled out
+            correctly before submitting your leave request.
+          </li>
+          <li>
+            Leave requests should be submitted at least two weeks in advance.
+          </li>
+          <li>
+            For urgent leave requests, please contact your manager directly.
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }
