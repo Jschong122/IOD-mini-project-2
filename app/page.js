@@ -37,7 +37,7 @@ export default function Home() {
         </Alert>
       </div>
       <div className="p-5 ">
-        <h1 className="text-4xl font-bold mb-4">
+        <h1 className=" text-4xl font-bold mb-4">
           Welcome to the Smart Form System
         </h1>
         <p className="text-lg">
@@ -49,22 +49,6 @@ export default function Home() {
 
       <div>
         <OnlineLeaveForm />
-
-        <div className=" mx-5">
-          <h2 className="text-2xl font-bold mb-2">Important Notices</h2>
-          <ul className="list-disc list-inside text-lg">
-            <li>
-              Please ensure you have logged in and all fields are filled out
-              correctly before submitting your leave request.
-            </li>
-            <li>
-              Leave requests should be submitted at least two weeks in advance.
-            </li>
-            <li>
-              For urgent leave requests, please contact your manager directly.
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
   );
