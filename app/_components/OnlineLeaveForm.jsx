@@ -57,7 +57,7 @@ function OnlineLeaveForm() {
   };
 
   return (
-    <div className=" md:flex p-3 m-8 justify-evenly rounded-xl border-none bg-gradient-to-r from-[#93b9e7] to-[#5284b3] ">
+    <div className=" md:flex p-3 m-8 justify-evenly rounded-xl border-none bg-gradient-to-r from-[#cfdcff] to-[#e2f1ff] drop-shadow-xl ">
       <form onSubmit={handleSubmit}>
         <Card className="bg-inherit border-none w-[300px] ">
           <CardHeader>

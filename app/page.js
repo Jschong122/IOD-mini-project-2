@@ -12,9 +12,9 @@ export default function Home() {
   }
 
   return (
-    <div className="h-full w-full">
-      <div>
-        <Alert>
+    <div className="h-full w-full bg-slate-100 ">
+      <div className="ml-20 lg:mx-auto">
+        <Alert className="border-none">
           <Terminal className="h-4 w-4" />
           <AlertTitle>
             {session ? (
