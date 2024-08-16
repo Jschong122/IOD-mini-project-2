@@ -1,0 +1,219 @@
+// ManagerRole.jsx
+import React, { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import {
+  fetchAllLeaveRequests,
+  updateLeaveRequestStatus,
+} from "../_components/managerFunctions";
+import SortingFunction from "../_components/SortingFunction";
+import { Dropdown, IconDropdown } from "react-day-picker";
+
+const ManagerRole = () => {
+  const [leaveRequests, setLeaveRequests] = useState([]);
+  const [editingRequest, setEditingRequest] = useState(null);
+  const [approve, setApprove] = useState("");
+  const [reject, setReject] = useState("");
+
+  const editRequest = async (requestId, updatedData) => {
+    console.log("Sending edit request for ID:", requestId);
+
+    try {
+      const response = await fetch(`/api/leave-request?id=${requestId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedData),
+      });
+      console.log("response", response.data);
+
+      if (response.ok) {
+        const updatedRequest = await response.json();
+
+        setLeaveRequests((prevRequests) =>
+          prevRequests.map((request) =>
+            request.id === requestId ? updatedRequest : request
+          )
+        );
+
+        setEditingRequest(null);
+        alert("Request updated successfully");
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update request");
+      }
+    } catch (error) {
+      console.error("Error updating request:", error);
+      alert("Error updating request: " + error.message);
+    }
+  };
+
+  const approveButton = () => {
+    setApprove("Approve");
+  };
+  const rejectButton = () => {
+    setReject("Reject");
+  };
+
+  useEffect(() => {
+    fetchAllLeaveRequests()
+      .then((data) => setLeaveRequests(data))
+      .catch((error) => console.error("Error fetching leave requests:", error));
+  }, []);
+
+  const handleStatusUpdate = async (requestId, newStatus) => {
+    try {
+      await updateLeaveRequestStatus(requestId, newStatus);
+      // Refresh the leave requests after update
+      const updatedRequests = await fetchAllLeaveRequests();
+      setLeaveRequests(updatedRequests);
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+
+  return (
+    <div>
+      <h2 className="text-2xl font-bold mb-3">Manager Dashboard</h2>
+
+      <div>
+        <div>
+          {" "}
+          <table className=" table-auto border-collapse lg:w-min-[1020px] md:w-auto ">
+            <thead className="">
+              <tr className="bg-slate-400 text-black ">
+                <th>
+                  Submitted Date
+                  <select className="bg-slate-400 text-center ">
+                    <option value="submittedDate"></option>
+                    <option value="submittedDate">A-Z</option>
+                    <option value="submittedDate">Z-A</option>
+                  </select>
+                </th>
+                <th>
+                  Username
+                  <select className="bg-slate-400 text-center ">
+                    <option value="submittedDate"></option>
+                    <option value="submittedDate">A-Z</option>
+                    <option value="submittedDate">Z-A</option>
+                  </select>
+                </th>
+                <th>Reason for leaving</th>
+                <th>Duration</th>
+                <th>
+                  Status
+                  <select className="bg-slate-400 text-center ">
+                    <option value="submittedDate"></option>
+                    <option value="submittedDate">A-Z</option>
+                    <option value="submittedDate">Z-A</option>
+                  </select>
+                </th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody className="text-center">
+              {leaveRequests.map((request) => (
+                <tr key={request.id}>
+                  <td className="border-2 border-grey-[#8c8c8c]">
+                    {request.submittedDate}
+                  </td>
+                  <td className="border-2 border-grey-[#8c8c8c]">
+                    {request.username}
+                  </td>
+                  <td className="border-2 border-grey-[#8c8c8c]">
+                    {request.reason}
+                  </td>
+                  <td className="border-2 border-grey-[#8c8c8c]">{`${request.startDate} - ${request.endDate}`}</td>
+                  <td className="border-2 border-grey-[#8c8c8c]">
+                    {request.status}
+                  </td>
+                  <td className="border-2 border-grey-[#8c8c8c]  md:flex justify-center   items-center ">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        {/* Edit Button */}
+                        <Button
+                          className="bg-[#99bac2] mx-2"
+                          variant="outline"
+                          onClick={() => setEditingRequest(request)}
+                        >
+                          Edit
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-[425px] border-none bg-slate-300">
+                        <DialogHeader>
+                          <DialogTitle className="text-grey">
+                            Edit Leave Request
+                          </DialogTitle>
+                        </DialogHeader>
+                        <form
+                          className="flex flex-col gap-4 py-4 rounded-lg  "
+                          onSubmit={(e) => {
+                            e.preventDefault();
+                            const formData = new FormData(e.target);
+                            const updatedData = {
+                              startDate: formData.get("startDate"),
+                              endDate: formData.get("endDate"),
+                              reason: formData.get("reason"),
+                            };
+                            editRequest(editingRequest.id, updatedData);
+                          }}
+                        >
+                          <input
+                            className="rounded bg-[#99bac2] border-2 border-slate-800"
+                            type="date"
+                            name="startDate"
+                            defaultValue={editingRequest?.startDate}
+                            required
+                          />
+                          <input
+                            className="rounded bg-[#99bac2] border-2 border-slate-800"
+                            type="date"
+                            name="endDate"
+                            defaultValue={editingRequest?.endDate}
+                            required
+                          />
+                          <input
+                            className="rounded bg-[#99bac2] border-2 border-slate-800"
+                            type="text"
+                            name="reason"
+                            defaultValue={editingRequest?.reason}
+                            required
+                          />
+                          <Button
+                            className="bg-teal-700 hover:bg-teal-500"
+                            type="submit"
+                          >
+                            Save Changes
+                          </Button>
+                        </form>
+                      </DialogContent>
+                    </Dialog>
+                    <Button
+                      className="  bg-blue-500 text-white mx-2 active:bg-blue-200 focus:bg-white m-2"
+                      onClick={() => handleStatusUpdate(request.id, "Approved")}
+                    >
+                      Approve
+                    </Button>
+                    <Button
+                      className="  bg-red-600 text-white mx-2 active:bg-blue-200 focus:bg-white"
+                      onClick={() => handleStatusUpdate(request.id, "Rejected")}
+                    >
+                      Reject
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>{" "}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ManagerRole;

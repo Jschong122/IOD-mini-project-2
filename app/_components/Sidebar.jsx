@@ -1,16 +1,32 @@
 "use client";
 
-import { House, UserRoundPen, FolderDot, Menu } from "lucide-react";
+import { UserRoundPen, FolderDot, Menu, X } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 
-function Sidebar() {
+function Sidebar({ isOpen, toggleSidebar }) {
   const { data: session } = useSession();
 
   return (
-    <div className=" hidden lg:flex flex-col justify-center bg-slate-300 h-screen min-w-60  text-black">
-      <div>
+    <div
+      className={`
+    ${isOpen ? "block" : "hidden"} lg:block
+    fixed lg:static
+    top-0 left-0
+    h-full w-60
+    bg-slate-300 text-black
+    z-50 transition-all duration-300 ease-in-out
+  `}
+    >
+      <button
+        onClick={toggleSidebar}
+        className="lg:hidden absolute top-2 right-2 p-2"
+      >
+        <X size={24} />
+      </button>
+
+      <div className="flex flex-col justify-center h-full">
         <ul className=" space-y-6 flex flex-col  text-center items-center content-center cursor-pointer">
           <Link href="/">
             <li className=" flex hover:text-blue-900 ">
