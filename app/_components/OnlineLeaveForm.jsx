@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 function OnlineLeaveForm() {
   const { data: session } = useSession();
@@ -48,11 +49,11 @@ function OnlineLeaveForm() {
       const result = await response.json();
       console.log("API response:", result);
 
-      alert("Leave request submitted successfully");
+      toast.success("Leave request submitted successfully");
       router.push("/dashboard");
     } catch (error) {
       console.error("Error:", error);
-      alert("Failed to submit leave request");
+      toast.error("Failed to submit leave request");
     }
   };
 

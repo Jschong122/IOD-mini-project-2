@@ -14,6 +14,7 @@ import {
 } from "../_components/managerFunctions";
 import SortingFunction from "../_components/SortingFunction";
 import { Dropdown, IconDropdown } from "react-day-picker";
+import { toast } from "react-toastify";
 
 const ManagerRole = () => {
   const [leaveRequests, setLeaveRequests] = useState([]);
@@ -42,14 +43,14 @@ const ManagerRole = () => {
         );
 
         setEditingRequest(null);
-        alert("Request updated successfully");
+        toast.success("Request updated successfully");
       } else {
         const errorData = await response.json();
         throw new Error(errorData.message || "Failed to update request");
       }
     } catch (error) {
       console.error("Error updating request:", error);
-      alert("Error updating request: " + error.message);
+      toast.error("Error updating request: " + error.message);
     }
   };
 
@@ -58,6 +59,10 @@ const ManagerRole = () => {
   };
   const rejectButton = () => {
     setReject("Reject");
+  };
+
+  const handleSort = (sortedRequests) => {
+    setLeaveRequests(sortedRequests);
   };
 
   useEffect(() => {
@@ -78,42 +83,28 @@ const ManagerRole = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-3">Manager Dashboard</h2>
+    <div className="w-[1000px]">
+      <div>
+        <h2 className="text-2xl font-bold mb-3">Manager Dashboard</h2>
+        <SortingFunction leaveRequests={leaveRequests} onSort={handleSort} />
+      </div>
 
       <div>
         <div>
           {" "}
           <table className=" table-auto border-collapse lg:w-min-[1020px] md:w-auto ">
             <thead className="">
-              <tr className="bg-slate-400 text-black ">
-                <th>
+              <tr className="bg-slate-300 text-black">
+                <th className="border-2 border-grey-[#8c8c8c]">
                   Submitted Date
-                  <select className="bg-slate-400 text-center ">
-                    <option value="submittedDate"></option>
-                    <option value="submittedDate">A-Z</option>
-                    <option value="submittedDate">Z-A</option>
-                  </select>
                 </th>
-                <th>
-                  Username
-                  <select className="bg-slate-400 text-center ">
-                    <option value="submittedDate"></option>
-                    <option value="submittedDate">A-Z</option>
-                    <option value="submittedDate">Z-A</option>
-                  </select>
+                <th className="border-2 border-grey-[#8c8c8c]">Username</th>
+                <th className="border-2 border-grey-[#8c8c8c]">
+                  Reason for leaving
                 </th>
-                <th>Reason for leaving</th>
-                <th>Duration</th>
-                <th>
-                  Status
-                  <select className="bg-slate-400 text-center ">
-                    <option value="submittedDate"></option>
-                    <option value="submittedDate">A-Z</option>
-                    <option value="submittedDate">Z-A</option>
-                  </select>
-                </th>
-                <th>Action</th>
+                <th className="border-2 border-grey-[#8c8c8c]">Duration</th>
+                <th className="border-2 border-grey-[#8c8c8c]">Status</th>
+                <th className="border-2 border-grey-[#8c8c8c]">Action</th>
               </tr>
             </thead>
             <tbody className="text-center">
@@ -122,15 +113,28 @@ const ManagerRole = () => {
                   <td className="border-2 border-grey-[#8c8c8c]">
                     {request.submittedDate}
                   </td>
-                  <td className="border-2 border-grey-[#8c8c8c]">
+                  <td className="border-2 border-grey-[#8c8c8c] px-7">
                     {request.username}
                   </td>
                   <td className="border-2 border-grey-[#8c8c8c]">
                     {request.reason}
                   </td>
-                  <td className="border-2 border-grey-[#8c8c8c]">{`${request.startDate} - ${request.endDate}`}</td>
-                  <td className="border-2 border-grey-[#8c8c8c]">
-                    {request.status}
+                  <td className="border-2 border-grey-[#8c8c8c] px-3">{`${request.startDate} - ${request.endDate}`}</td>
+                  <td className="border-2 border-grey-[#8c8c8c] px-3">
+                    {request.status === "Approved" ? (
+                      <span className="bg-green-300 rounded-xl px-2">
+                        Approved
+                      </span>
+                    ) : request.status === "Rejected" ? (
+                      <span className="bg-red-300  rounded-xl px-2">
+                        Rejected
+                      </span>
+                    ) : (
+                      <span className="bg-yellow-300  rounded-xl px-2">
+                        {" "}
+                        Pending{" "}
+                      </span>
+                    )}
                   </td>
                   <td className="border-2 border-grey-[#8c8c8c]  md:flex justify-center   items-center ">
                     <Dialog>
@@ -194,13 +198,13 @@ const ManagerRole = () => {
                       </DialogContent>
                     </Dialog>
                     <Button
-                      className="  bg-blue-500 text-white mx-2 active:bg-blue-200 focus:bg-white m-2"
+                      className="  bg-blue-500 text-white m-2 active:bg-blue-200 hover:bg-blue-800 "
                       onClick={() => handleStatusUpdate(request.id, "Approved")}
                     >
                       Approve
                     </Button>
                     <Button
-                      className="  bg-red-600 text-white mx-2 active:bg-blue-200 focus:bg-white"
+                      className="  bg-red-600 text-white m-2 active:bg-red-600 hover:bg-red-800"
                       onClick={() => handleStatusUpdate(request.id, "Rejected")}
                     >
                       Reject
@@ -209,7 +213,7 @@ const ManagerRole = () => {
                 </tr>
               ))}
             </tbody>
-          </table>{" "}
+          </table>
         </div>
       </div>
     </div>

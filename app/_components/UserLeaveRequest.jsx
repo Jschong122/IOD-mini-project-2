@@ -9,6 +9,9 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/dist/server/api-utils";
+import SortingFunction from "../_components/SortingFunction";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function UserLeaveRequest({ leaveRequests, setLeaveRequests }) {
   const [editingRequest, setEditingRequest] = useState(null);
@@ -28,13 +31,13 @@ function UserLeaveRequest({ leaveRequests, setLeaveRequests }) {
         setLeaveRequests((prevRequests) =>
           prevRequests.filter((r) => r.id !== requestId)
         );
-        alert("Request deleted successfully");
+        toast.success("Request deleted successfully");
       } else {
         throw new Error("Failed to delete request");
       }
     } catch (error) {
       console.error("Error deleting request:", error);
-      alert("Failed to delete request: " + error.message);
+      toast.error("Failed to delete request: " + error.message);
     }
   };
 
@@ -59,19 +62,23 @@ function UserLeaveRequest({ leaveRequests, setLeaveRequests }) {
         );
 
         setEditingRequest(null);
-        alert("Request updated successfully");
+        toast.success("Request updated successfully");
       } else {
         const errorData = await response.json();
         throw new Error(errorData.message || "Failed to update request");
       }
     } catch (error) {
       console.error("Error updating request:", error);
-      alert("Error updating request: " + error.message);
+      toast.error("Error updating request: " + error.message);
     }
+  };
+  const handleSort = (sortedRequests) => {
+    setLeaveRequests(sortedRequests);
   };
 
   return (
     <div>
+      <SortingFunction leaveRequests={leaveRequests} onSort={handleSort} />
       <h1 className="text-2xl font-bold mb-3"> Dashboard </h1>
       <table className=" table-auto border-collapse lg:w-[1000px]">
         <thead>

@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -25,7 +26,7 @@ function Login() {
         setError(result.error);
         console.log(error);
       } else {
-        alert("Login Successful");
+        toast.success("Login Successful");
         window.location.href = "/";
       }
     } catch (error) {

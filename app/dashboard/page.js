@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSession, status } from "next-auth/react";
-
+import { redirect } from "next/navigation";
 import UserInfo from "../_components/UserInfo";
 import LeaveRequestTable from "../_components/LeaveRequestTable";
 
@@ -9,15 +9,7 @@ const dashboard = () => {
   const { data: session } = useSession();
   console.log("session", session);
 
-  if (!session)
-    return (
-      <div className=" flex text-7xl w-full h-full justify-center items-center">
-        Please
-        <a href="/auth/login">
-          <span className=" text-blue-700">Login</span>
-        </a>
-      </div>
-    );
+  if (!session) return redirect("/auth/login");
 
   return (
     <div className=" ml-20 lg:ml-auto flex flex-col h-screen w-screen ">
