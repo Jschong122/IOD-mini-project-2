@@ -74,7 +74,7 @@ const ManagerRole = () => {
   const handleStatusUpdate = async (requestId, newStatus) => {
     try {
       await updateLeaveRequestStatus(requestId, newStatus);
-      // Refresh the leave requests after update
+
       const updatedRequests = await fetchAllLeaveRequests();
       setLeaveRequests(updatedRequests);
     } catch (error) {
