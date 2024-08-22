@@ -10,7 +10,6 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        // Replace this with your own logic to verify the user's credentials
         const users = [
           {
             id: 1,
@@ -51,10 +50,10 @@ export const authOptions = {
     }),
   ],
   pages: {
-    signIn: "/auth/login", // Customize the sign-in page path
+    signIn: "/auth/login",
   },
   session: {
-    jwt: true, // Use JSON Web Tokens for session handling
+    jwt: true,
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -77,7 +76,6 @@ export const authOptions = {
   secret: process.env.NEXT_AUTH_SECRET,
 };
 
-// Exporting the NextAuth handler for both GET and POST methods
 const handler = (req, res) => NextAuth(req, res, authOptions);
 
 export { handler as GET, handler as POST };
