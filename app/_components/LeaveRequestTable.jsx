@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import UserLeaveRequest from "../_components/UserLeaveRequest";
 import ManagerRole from "../_components/ManagerRole";
-import { Button } from "react-day-picker";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -55,8 +55,6 @@ function LeaveRequestTable() {
 
   return (
     <div className=" m-5 mt-[100px]">
-      {/* <h1 className="text-2xl font-bold mb-3 "> Leave History</h1> */}
-
       {/* Only when role is manager */}
 
       {session?.user?.role === "Manager" ? (

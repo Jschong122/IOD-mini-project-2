@@ -73,15 +73,6 @@
     "status": "Pending"
   },
   {
-    "id": 1723563000411,
-    "startDate": "2024-10-05",
-    "endDate": "2024-10-19",
-    "reason": "vacation",
-    "submittedDate": "2023-09-03",
-    "username": "Emily",
-    "status": "Pending"
-  },
-  {
     "id": 1724071941855,
     "startDate": "2024-08-21",
     "endDate": "2024-08-23",
@@ -97,6 +88,24 @@
     "reason": "Sick",
     "submittedDate": "2024-08-19",
     "username": "John",
+    "status": "Pending"
+  },
+  {
+    "id": 1724161001815,
+    "startDate": "2024-06-08",
+    "endDate": "2024-06-10",
+    "reason": "Sick",
+    "submittedDate": "2024-08-20",
+    "username": "John",
+    "status": "Pending"
+  },
+  {
+    "id": 1724324289473,
+    "startDate": "2024-08-14",
+    "endDate": "2024-08-16",
+    "reason": "Sick",
+    "submittedDate": "2024-08-22",
+    "username": "Emily",
     "status": "Pending"
   }
 ]

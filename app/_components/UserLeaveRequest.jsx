@@ -105,7 +105,16 @@ function UserLeaveRequest({ leaveRequests, setLeaveRequests }) {
               </td>
               <td className="border-2 border-grey-[#8c8c8c]">{`${request.startDate} - ${request.endDate}`}</td>
               <td className="border-2 border-grey-[#8c8c8c]">
-                {request.status}
+                {request.status === "Approved" ? (
+                  <span className="bg-green-300 rounded-xl px-2">Approved</span>
+                ) : request.status === "Rejected" ? (
+                  <span className="bg-red-300  rounded-xl px-2">Rejected</span>
+                ) : (
+                  <span className="bg-yellow-300  rounded-xl px-2">
+                    {" "}
+                    Pending{" "}
+                  </span>
+                )}
               </td>
               <td className="border-2 border-grey-[#8c8c8c]">
                 <Dialog>
